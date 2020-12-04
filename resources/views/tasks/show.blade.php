@@ -24,9 +24,6 @@
             <option value="{{$user->id}}">{{$user->name}} : {{$user->email}}</option>
             @endforeach
         </select>
-        @error('user_id')
-            <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
         <button type="submit">Ajouter</button>
     </form>
 

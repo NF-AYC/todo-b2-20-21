@@ -15,6 +15,16 @@ class Task extends Model
 {
     use HasFactory;
 
+
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['title', 'description', 'due_date', 'category_id', 'board_id', 'state'];
+
+
     /**
      * Renvoie la catégorie de la tâche
      *

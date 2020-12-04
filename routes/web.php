@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BoardController;
+use App\Http\Controllers\BoardUserController;
+use App\Http\Controllers\TaskController;
 use App\Models\Board;
 
 /*
@@ -33,3 +35,10 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 // Route::delete('/boards/{board}', [BoardController::class, 'destroy'])->middleware('auth')->name('boards.destroy');
 
 Route::resource('boards', BoardController::class)->middleware('auth');
+
+Route::resource('tasks', TaskController::class)->middleware('auth');
+Route::get('boards/{board}/tasks/create', [TaskController::class, 'createFromBoard'])->middleware('auth')->name('boards.tasks.create');
+Route::post('boards/{board}/tasks', [TaskController::class, 'storeFromBoard'])->middleware('auth')->name('boards.tasks.store');
+
+Route::post('boards/{board}/boarduser', [BoardUserController::class ,  'store'])->middleware('auth')->name('boards.boarduser.store');
+Route::delete('boarduser/{BoardUser}', [BoardUserController::class ,  'destroy'])->middleware('auth')->name('boards.boarduser.destroy');;

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Board;
+use App\Models\{Board, User};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -60,8 +60,13 @@ class BoardController extends Controller
      */
     public function show(Board $board)
     {
-        //
-        return view("user.boards.show", ["board" => $board]);
+        //Ici on doit on doit maintenant fournir la liste des utilisateurs qui ne sont pas dans le board pour pouvoir les inviter
+        // D'abord on récupère les ids des users du board : 
+        $boardUsersId = $board->users->pluck('id'); 
+        
+        // On sélectionne maintenant tous les utilisateurs dont l'id n'appartient pas à la liste des ids des utilisateurs du board
+        $usersNotInBoard = User::whereNotIn('id', $boardUsersId)->get(); 
+        return view("user.boards.show", ["board" => $board, 'users' => $usersNotInBoard]);
     }
 
     /**

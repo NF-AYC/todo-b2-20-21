@@ -17,6 +17,8 @@ class BoardUser extends Pivot
      */
     public $incrementing = true;
 
+    protected $primaryKey = "id";
+
     /**
      * Renvoi l'utilisateur lié au board
      *

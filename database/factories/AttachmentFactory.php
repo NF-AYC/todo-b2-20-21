@@ -31,8 +31,7 @@ class AttachmentFactory extends Factory
                 'size' => 256,
                 'created_at' => now(),
                 'updated_at' => now(),
-    
-            ];
+                ];
         }
     }
 }
