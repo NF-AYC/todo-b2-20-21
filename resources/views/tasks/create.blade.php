@@ -6,18 +6,8 @@
 @section('content')
     <p>Add a task </p>
     <div>
-        <form action="{{route('tasks.store')}}" method="POST">
+        <form action="{{route('tasks.store', $board)}}" method="POST">
             @csrf
-            
-            <select name="board_id" id="board_id">
-                @foreach ($boards as $board)
-                <option value="{{$board->id}}">{{$board->title}}</option>
-                @endforeach
-            </select>
-            @error('board')
-            <div class="alert alert-danger">{{ $message }}</div>
-            @enderror
-            <br>
             
             <label for="title">title</label>
             <input id="title" type="text" name="title" class="@error('title') is-invalid @enderror">
@@ -32,7 +22,7 @@
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
             <br>
-            <label for="due_date">Description</label>
+            <label for="due_date">Date de fin</label>
             <input type='date' name='due_date' id="due_date" >
             <br>
             <select name="category_id" id="category_id">

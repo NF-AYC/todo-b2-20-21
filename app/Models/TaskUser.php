@@ -40,7 +40,6 @@ class TaskUser extends Pivot
          */
         //Si la fonction renvoi faux, la création ne se fait pas, sinon elle s'effectue
         static::creating(function ($task_user) {
-
             return $task_user->task->board->users->find($task_user->user_id ) !== null; 
         });
     }

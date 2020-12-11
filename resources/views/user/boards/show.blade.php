@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', "User's board {{$board->title}}")
+@section('title', "User's board " . $board->title)
 
 
 @section('content')

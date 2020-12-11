@@ -1,30 +1,23 @@
 @extends('layouts.main')
 
-@section('title', "User's board {{$board->title}}")
+@section('title', "Task " .  $task->title)
 
 
 @section('content')
-    <h2>{{$board->title}}</h2>
-    <p>{{$board->description}}</p>
+    <h2>{{$task->title}}</h2>
+    <p>{{$task->description}}</p>
+    <p>À finir avant le {{$task->due_date}}</p>
+    <p>Status :  {{$task->state}}</p>
     <div class="participants">
-        @foreach($board->users as $user) 
-            <p>{{$user->name}}</p>
-            <form action="{{route('boards.boarduser.destroy', $user->pivot)}}" method="POST">
+        @foreach($task->assignedUsers as $user) 
+            <p>{{$user->name}} : {{$user->email}}</p>
+            {{-- <form action="{{route('boards.boarduser.destroy', $user->pivot)}}" method="POST">
                 @csrf
                 @method("DELETE")
                 <button type="submit">Supprimer</button>
-            </form>
+            </form> --}}
         @endforeach
     </div>
 
-    <form action="{{route('boards.boarduser.store', $board)}}" method="POST">
-        @csrf
-        <select name="user_id" id="user_id">
-            @foreach($users as $user)
-            <option value="{{$user->id}}">{{$user->name}} : {{$user->email}}</option>
-            @endforeach
-        </select>
-        <button type="submit">Ajouter</button>
-    </form>
 
 @endsection

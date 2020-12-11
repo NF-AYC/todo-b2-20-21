@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', "Create a new board")
+@section('title', "Edit board" . $board->title)
 
 
 @section('content')

@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Models\{Board, User};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,7 +24,7 @@ class BoardController extends Controller
          * 
          *  https://laravel.com/docs/8.x/authorization#authorizing-resource-controllers
          */
-        $this->authorizeResource(Board::class, 'board');
+        //$this->authorizeResource(Board::class, 'board');
     }
 
     /**
@@ -35,20 +36,10 @@ class BoardController extends Controller
     {
         // On récupérer tous les boards auxquels participe l'utilisateur connecté 
         $user = Auth::user();
-        return view('user.boards.index', ['boards' =>  $user->boards]);
+        //return view('user.boards.index', ['boards' =>  $user->boards]);
+        return Board::all();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        // $this->authorize('create', Board::class);
-        // renvoi le formulaire de création d'un board
-        return view('user.boards.create');
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -72,7 +63,7 @@ class BoardController extends Controller
         
         
         $board->save();
-        return redirect()->route('boards.index');
+        return $board; 
     }
 
     /**
@@ -83,31 +74,9 @@ class BoardController extends Controller
      */
     public function show(Board $board)
     {
-
-
-        // $this->authorize('view', $board);
-
-
-        //Ici on doit on doit maintenant fournir la liste des utilisateurs qui ne sont pas dans le board pour pouvoir les inviter
-        // D'abord on récupère les ids des users du board : 
-        $boardUsersId = $board->users->pluck('id'); 
-        
-        // On sélectionne maintenant tous les utilisateurs dont l'id n'appartient pas à la liste des ids des utilisateurs du board
-        $usersNotInBoard = User::whereNotIn('id', $boardUsersId)->get(); 
-        return view("user.boards.show", ["board" => $board, 'users' => $usersNotInBoard]);
+        return $board; 
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Board  $board
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Board $board)
-    {
-        //
-        return view('user.boards.edit', ['board' => $board]);
-    }
 
     /**
      * Update the specified resource in storage.
@@ -127,7 +96,7 @@ class BoardController extends Controller
         $board->description = $validatedData['description']; 
         $board->update();
 
-        return redirect()->route('boards.index');
+        return  $board; 
     }
 
     /**
@@ -140,6 +109,6 @@ class BoardController extends Controller
     {
         //
         $board->delete(); 
-        return redirect()->route('boards.index');
+        return $board; 
     }
 }
